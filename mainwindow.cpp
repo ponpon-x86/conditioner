@@ -118,14 +118,12 @@ void MainWindow::updateHumidity() {
 }
 
 void MainWindow::handleIncreaseTemperature() {
-    if (conditioner.getTemperature() > 50) return;
     qDebug() << "Temperature increased.";
     conditioner.increaseTemperature();
     updateTemperature();
 }
 
 void MainWindow::handleDecreaseTemperature() {
-    if (conditioner.getTemperature() < -50) return;
     qDebug() << "Temperature decreased.";
     conditioner.decreaseTemperature();
     updateTemperature();

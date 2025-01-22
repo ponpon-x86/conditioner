@@ -84,12 +84,12 @@ public:
     /*!
      * \brief increaseTemperature increments AC's temperature by 1
      */
-    void increaseTemperature() { this->params.temperature++; };
+    void increaseTemperature() { if (this->params.temperature < 50) this->params.temperature++; };
 
     /*!
      * \brief decreaseTemperature decrements AC's temperature by 1
      */
-    void decreaseTemperature() { this->params.temperature--; };
+    void decreaseTemperature() { if (this->params.temperature > -50) this->params.temperature--; };
 
 
 
