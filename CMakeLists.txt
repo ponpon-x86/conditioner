@@ -33,6 +33,9 @@ set(PROJECT_SOURCES
 
         loader.cpp
         loader.h
+
+        valueslider.cpp
+        valueslider.h
 )
 
 if(${QT_VERSION_MAJOR} EQUAL 5)
