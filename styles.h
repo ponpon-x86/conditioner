@@ -18,20 +18,20 @@ namespace styles {
     extern QString minus_button_dark;
     extern QString temperature_background_widget_dark;
 
-    extern QString mode_button_light;
+    extern QString utility_button_light;
     extern QString humidity_button_light;
     extern QString power_button_light;
     extern QString scene_light;
-    extern QString direction_label_light;
+    extern QString general_label_light;
     extern QString direction_slider_light;
     extern QString pressure_button_light;
     extern QString misc_background_widget_light;
 
-    extern QString mode_button_dark;
+    extern QString utility_button_dark;
     extern QString humidity_button_dark;
     extern QString power_button_dark;
     extern QString scene_dark;
-    extern QString direction_label_dark;
+    extern QString general_label_dark;
     extern QString direction_slider_dark;
     extern QString pressure_button_dark;
     extern QString misc_background_widget_dark;

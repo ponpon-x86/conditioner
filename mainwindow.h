@@ -22,8 +22,6 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-protected:
-    void keyPressEvent(QKeyEvent *event) override;
 private:
     Conditioner conditioner;
     Misc* misc;
@@ -57,6 +55,8 @@ private slots:
     void handleDirectionSliderValueChanged(int value);
 
     void handleGraphDataRequest();
+
+    void handleSettingsCall();
 };
 
 #endif // MAINWINDOW_H

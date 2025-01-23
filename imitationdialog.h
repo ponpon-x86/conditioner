@@ -21,10 +21,13 @@ class ImitationDialog : public QDialog
     Q_OBJECT
 public:
     /*!
-     * \brief ImitationDialog is the only constructor
-     * \param parent, the parent of this widget
+     * \brief ImitationDialog starts the data imitation dialog
+     * \param temperature the temperature
+     * \param humidity the humidity
+     * \param pressure the pressure
+     * \param parent widget's parent
      */
-    explicit ImitationDialog(QWidget *parent = nullptr);
+    ImitationDialog(QString temperature = "24", QString humidity = "50", QString pressure = "758", QWidget *parent = nullptr);
 
     /*!
      * \brief getTemperature is used to get the entered temp.

@@ -113,3 +113,18 @@ void Temperature::switchStyles(bool light) {
         widget->setStyleSheet(styles::temperature_background_widget_dark);
     }
 }
+
+void Temperature::updatePower(bool working) {
+    // AC doesn't work!?!?
+    // burn the fields
+    if (!working) {
+        plus_button->setEnabled(false);
+        minus_button->setEnabled(false);
+        target_temperature_button->setEnabled(false);
+        real_temperature_label->setText("");
+    } else {
+        plus_button->setEnabled(true);
+        minus_button->setEnabled(true);
+        target_temperature_button->setEnabled(true);
+    }
+}

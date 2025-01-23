@@ -74,7 +74,11 @@ Thumbs.db
 
 /.qmake.stash
 
+/html
 
+/latex
+
+/Doxyfile
 
 # qtcreator generated files
 

@@ -1,28 +1,28 @@
 
 #include "imitationdialog.h"
 
-ImitationDialog::ImitationDialog(QWidget *parent)
+ImitationDialog::ImitationDialog(QString temperature, QString humidity, QString pressure, QWidget *parent)
     : QDialog(parent)
 {
     auto t_label = new QLabel(tr("Температура:"));
-    temperature = new QLineEdit();
+    this->temperature = new QLineEdit();
     auto p_label = new QLabel(tr("Давление:"));
-    pressure = new QLineEdit();
+    this->pressure = new QLineEdit();
     auto h_label = new QLabel(tr("Влажность:"));
-    humidity = new QLineEdit();
+    this->humidity = new QLineEdit();
 
     // default temp
-    temperature->setText(QString::number(24));
-    pressure->setText(QString::number(758));
-    humidity->setText(QString::number(50));
+    this->temperature->setText(temperature);
+    this->pressure->setText(pressure);
+    this->humidity->setText(humidity);
 
     auto layout = new QVBoxLayout();
     layout->addWidget(t_label);
-    layout->addWidget(temperature);
+    layout->addWidget(this->temperature);
     layout->addWidget(p_label);
-    layout->addWidget(pressure);
+    layout->addWidget(this->pressure);
     layout->addWidget(h_label);
-    layout->addWidget(humidity);
+    layout->addWidget(this->humidity);
 
     resize(300, 150);
 

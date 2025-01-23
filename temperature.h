@@ -35,6 +35,12 @@ public:
      * \param light is a flag which indicates whether light theme should be used
      */
     void switchStyles(bool light = true);
+
+    /*!
+     * \brief updatePower updates the temperature module in accord with AC's working state
+     * \param working is a flag indicating whether the AC is working or not
+     */
+    void updatePower(bool working);
 private:
     QPushButton *plus_button;
     QPushButton *target_temperature_button;

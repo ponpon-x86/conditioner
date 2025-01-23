@@ -4,26 +4,6 @@
 #include <QTabWidget>
 #include "temperature.h"
 
-void MainWindow::keyPressEvent(QKeyEvent *event) {
-    if (event->key() == Qt::Key_Q) { // Check if 'Q' key is pressed
-        ImitationDialog dialog(this);
-        if (dialog.exec() == QDialog::Accepted) {
-            // the dialog was accepted
-            conditioner.setHumidity(dialog.getHumidity().toUInt());
-            conditioner.setPressure(dialog.getPressure().toUInt());
-            conditioner.setTemperature(dialog.getTemperature().toInt(), true);
-
-            updatePressure();
-            updateTemperature();
-            updateHumidity();
-        } else {
-            // the dialog was rejected
-        }
-    } else {
-        QMainWindow::keyPressEvent(event); // Pass other keys to the base class
-    }
-}
-
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
@@ -60,6 +40,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(temperature, &Temperature::decreaseTemperature, this, &MainWindow::handleDecreaseTemperature);
     connect(temperature, &Temperature::changeTemperatureUnits, this, &MainWindow::handleTemperatureUnitsChange);
     connect(misc, &Misc::modeSwitch, this, &MainWindow::handleModeSwitch);
+    connect(misc, &Misc::settingsCalled, this, &MainWindow::handleSettingsCall);
     connect(misc, &Misc::powerSwitch, this, &MainWindow::handlePowerSwitch);
     connect(misc, &Misc::changePressureUnits, this, &MainWindow::handlePressureUnitsChange);
     connect(misc, &Misc::directionSliderValueChanged, this, &MainWindow::handleDirectionSliderValueChanged);
@@ -106,6 +87,8 @@ QString MainWindow::formPressureString() {
 }
 
 void MainWindow::updateTemperature() {
+    auto working = conditioner.isWorking();
+    if (!working) return;
     temperature->updateTemperature(this->formTemperatureString());
     temperature->updateTemperature(this->formTemperatureString(true), true);
 }
@@ -171,7 +154,9 @@ void MainWindow::updateStyles() {
 void MainWindow::updatePower() {
     QString value = conditioner.isWorking() ? "ВЫКЛЮЧИТЬ " : "ВКЛЮЧИТЬ ";
     value += "КОНДИЦИОНЕР";
-    misc->updatePower(value);
+    misc->updatePower(value, conditioner.isWorking());
+    temperature->updatePower(conditioner.isWorking());
+    if (conditioner.isWorking()) updateTemperature();
 }
 
 void MainWindow::updatePressure() {
@@ -189,10 +174,29 @@ void MainWindow::updateAirFlowDirection() {
 
 void MainWindow::updateGraph() {
     auto data = conditioner.getParams();
-    misc->updateGraph( data.temperature , data.outside_temperature , light_mode , data.working );
+    misc->updateGraph( data.temperature , data.outside_temperature , data.pressure, data.humidity, light_mode , data.working );
 }
 
 void MainWindow::handleGraphDataRequest() {
     updateGraph();
     qDebug() << "Updating graph.";
+}
+
+void MainWindow::handleSettingsCall() {
+    auto params = conditioner.getParams();
+    ImitationDialog dialog(QString::number(params.outside_temperature),
+                           QString::number(params.humidity),
+                           QString::number(params.pressure), this);
+    if (dialog.exec() == QDialog::Accepted) {
+        // the dialog was accepted
+        conditioner.setHumidity(dialog.getHumidity().toUInt());
+        conditioner.setPressure(dialog.getPressure().toUInt());
+        conditioner.setTemperature(dialog.getTemperature().toInt(), true);
+
+        updatePressure();
+        updateTemperature();
+        updateHumidity();
+    } else {
+        // the dialog was rejected
+    }
 }
